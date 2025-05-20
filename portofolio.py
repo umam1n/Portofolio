@@ -56,7 +56,7 @@ if page == "Homepage":
             "Welcome to my online portfolio showcasing my work in data visualization, data analysis, and UI/UX design. Explore my projects below!"
         )
         st.markdown(
-            "[LinkedIn](https://www.linkedin.com/in/mushthafa/) | [GitHub](your_github_url)"
+            "[LinkedIn](https://www.linkedin.com/in/mushthafa/) | [GitHub](https://github.com/umam1n/)"
         )  # Replace with your actual URLs
 
     st.markdown("---")
@@ -66,12 +66,13 @@ if page == "Homepage":
     # You can display thumbnails or brief descriptions of a few key projects here
     # Example:
     col3, col4 = st.columns(2)
+    col5 = st.columns(2)
     with col3:
         try:
             project1_image = Image.open(
-                r"C:\Users\umaml\Pictures\wallpapers\GNBzm-ObUAAekm1.jpg"
+                r"C:\Users\umaml\Downloads\29.7 cm x 42 cm.png"
             )  # Replace with your image path
-            st.image(project1_image, caption="Project 1 Title")
+            st.image(project1_image, caption="Infographic of Poverty Rate in Indonesia")
         except FileNotFoundError:
             st.error("Project 1 image not found. Please update the path.")
         st.markdown("[View Project 1](#project-1)")  # Create an anchor link later
@@ -79,112 +80,63 @@ if page == "Homepage":
     with col4:
         try:
             project2_image = Image.open(
-                r"C:\Users\umaml\Downloads\1.png"
+                r"C:\Users\umaml\Downloads\Home.png"
             )  # Replace with your image path
-            st.image(project2_image, caption="Project 2 Title")
+            st.image(project2_image, caption="Visualization of Stock Price Prediction")
         except FileNotFoundError:
             st.error("Project 2 image not found. Please update the path.")
         st.markdown("[View Project 2](#project-2)")  # Create an anchor link later
 
-    st.markdown("---")
-
-    # --- Code Snippet Showcase ---
-    st.subheader("Code Snippet Highlight")
-    st.write(
-        "Here's a glimpse into some of the Python code I use for data analysis and visualization:"
-    )
-
-    # Example Code Snippet 1
-    st.code(
-        """
-        import pandas as pd
-        import matplotlib.pyplot as plt
-
-        data = {'Category': ['A', 'B', 'C', 'D'],
-                'Value': [25, 40, 30, 55]}
-        df = pd.DataFrame(data)
-
-        plt.figure(figsize=(8, 6))
-        plt.bar(df['Category'], df['Value'])
-        plt.xlabel('Category')
-        plt.ylabel('Value')
-        plt.title('Sample Bar Chart')
-        plt.show()
-        """,
-        language="python",
-    )
-
-    st.write(
-        "This snippet demonstrates creating a simple bar chart using Matplotlib with Pandas."
-    )
+# Second row: single column (col5)
+    col5 = st.columns(1)[0] # Using [0] to unpack the single column from the tuple
+    with col5:
+        try:
+            project3_image = Image.open(
+                r"C:\Users\umaml\Downloads\newplot.png"
+            )  # Replace with your image path
+            st.image(project3_image, caption="Another Stock Prediction Visualization")
+        except FileNotFoundError:
+            st.error("Project 3 image not found. Please update the path.")
+        st.markdown("[View Project 3](#project-3)")
 
     st.markdown("---")
 
-    # Example Code Snippet 2
-    st.code(
-        """
-        import seaborn as sns
-        import matplotlib.pyplot as plt
 
-        # Sample data (replace with your actual data)
-        tips = sns.load_dataset("tips")
-
-        sns.scatterplot(x="total_bill", y="tip", hue="time", data=tips)
-        plt.title("Total Bill vs. Tip Amount")
-        plt.show()
-        """,
-        language="python",
-    )
-
-    st.write(
-        "This snippet showcases a scatter plot created with Seaborn, highlighting the relationship between total bill and tip amount."
-    )
-
-    st.markdown("---")
-
-    # --- Stock Prediction Project Snippet on Homepage ---
-    st.subheader("Featured Data Analysis Project: Stock Price Prediction")
-    st.write("A project demonstrating stock price prediction using LSTM and Streamlit.")
-    st.code(
-        """
-        import streamlit as st
-        import yfinance as yf
-        import pandas as pd
-        import numpy as np
-        from sklearn.preprocessing import MinMaxScaler
-        from tensorflow.keras.models import Sequential
-        from tensorflow.keras.layers import LSTM, Dense
-        import plotly.graph_objects as go
-
-        # --- Simplified Snippet ---
-        st.subheader("Predicting BBRI Stock Price (Snippet)")
-        ticker = "BBRI.JK"
-        data = yf.download(ticker, period="1y")
-        close_prices = data['Close'].values.reshape(-1, 1)
-        scaler = MinMaxScaler()
-        scaled_prices = scaler.fit_transform(close_prices)
-
-        # Basic LSTM model (for demonstration)
-        model = Sequential([
-            LSTM(units=50, return_sequences=True, input_shape=(None, 1)),
-            LSTM(units=50),
-            Dense(units=1)
-        ])
-
-        st.write("A simplified LSTM model is used for demonstration.")
-        fig = go.Figure(data=[go.Scatter(x=data.index, y=data['Close'], mode='lines')])
-        fig.update_layout(title='Closing Price of BBRI (Last Year)', xaxis_title='Date', yaxis_title='Price')
-        st.plotly_chart(fig)
-        """,
-        language="python",
-    )
-    st.markdown("[View Full Project](#stock-prediction-project)")  # Link to the full project section
 
 elif page == "Data Visualization Projects":
     st.header("Data Visualization Projects")
     st.write(
-        "Showcase your data visualization projects here. For each project, you can include descriptions, images/interactive plots, code snippets, and links."
+        "Visualization of data project."
     )
+    st.subheader("Infographic of Poverty Rate in Indonesia")
+    st.write(
+        "This project visualizes the poverty rate in Indonesia using an infographic format. The infographic highlights key statistics and trends related to poverty in the country."
+    )
+    try:
+        project1_image = Image.open(
+            r"C:\Users\umaml\Downloads\29.7 cm x 42 cm.png"
+        )  # Replace with your image path
+        st.image(project1_image, caption="Infographic of Poverty Rate in Indonesia")
+    except FileNotFoundError:
+        st.error("Image for Infographic of Poverty Rate not found. Please update the path.")
+
+    # Add more data visualization projects here following the same pattern
+    st.markdown("---")
+    st.subheader("Power BI Dashboard  BI Team 4 Report")
+    st.write("An interactive Power BI dashboard displaying key business insights and performance metrics.")
+    # Power BI Embed Code
+    powerbi_embed_code = """
+    <iframe title="BI Team 4" width="600" height="373.5" src="https://app.powerbi.com/view?r=eyJrIjoiZTgyZjA1OTAtYTE2My00MDNjLTg2ZGUtNzgwODdmZjAxYTg1IiwidCI6IjkwYWZmZTBmLWMyYTMtNDEwOC1iYjk4LTZjZWI0ZTk0ZWYxNSIsImMiOjEwfQ%3D%3D&pageName=08a16d8354001fa1d27a" frameborder="0" allowFullScreen="true"></iframe>    """
+    components.html(powerbi_embed_code, height=400) # Adjust height as needed for better viewing
+
+    st.write("This dashboard was developed to provide a comprehensive overview of [mention specific area, e.g., sales performance, operational efficiency] for BI Team 4, allowing for drill-down analysis and interactive filtering.")
+
+    # try:
+    #     project2_image = Image.open(r"path/to/your/dataviz_project2_image.png")
+    #     st.image(project2_image, caption="Your DataViz Project 2 Title")
+    # except FileNotFoundError:
+    #     st.error("Image for DataViz Project 2 not found. Please update the path.")
+    # st.markdown("[View Interactive Dashboard](your_dashboard_url)")
 
 elif page == "Data Analysis Projects":
     st.header("Data Analysis Projects")
@@ -341,51 +293,70 @@ elif page == "Data Analysis Projects":
     pct_change = ((end_price - start_price) / start_price) * 100
     st.metric("📈 Persentase Prediksi Kenaikan", f"{pct_change:.2f} %")
 
-    # Function to scrape sentiment data
+
+    # Function to scrape sentiment data (MODIFIED)
+    # Using st.cache_data to avoid re-scraping on every rerun
+    @st.cache_data(ttl=3600) # Cache for 1 hour
     def scrape_sentiment(ticker):
+        # Updated sources to only include Google News and Yahoo Finance News
         sources = {
-            "Twitter": f"https://twitter.com/search?q=${ticker}&src=recent_tweets",
             "Google News": f"https://news.google.com/search?q={ticker}&hl=en-US&gl=US&ceid=US:en",
+            "Yahoo Finance News": f"https://finance.yahoo.com/quote/{ticker}/news?p={ticker}",
         }
-        sentiment_data = []
-        scraped_data = {"Twitter": [], "Google News": []}  # Store the text
-        for source, url in sources.items():
+        all_scraped_data = {"Google News": [], "Yahoo Finance News": []}  # Store the raw text
+
+        for source_name, url in sources.items():
             try:
                 response = requests.get(url, headers={"User-Agent": "Mozilla/5.0"})
-                response.raise_for_status()
+                response.raise_for_status() # Raise HTTPError for bad responses (4xx or 5xx)
                 soup = BeautifulSoup(response.content, "html.parser")
-                if source == "Twitter":
-                    # Example extraction (adapt to Twitter's current HTML structure)
-                    tweet_elements = soup.find_all(
-                        "div", attrs={"data-testid": "tweet"}
-                    )  # Adapt as needed.
-                    tweets = [el.text.strip() for el in tweet_elements]
-                    sentiments = [get_sentiment(tweet) for tweet in tweets[:2]]
-                    sentiment_data.extend(sentiments)
-                    scraped_data["Twitter"].extend(tweets[:2])  # Store
-                elif source == "Google News":
-                    # Example extraction (adapt to Google News's HTML structure)
-                    article_elements = soup.find_all("article")
-                    headlines = [el.text.strip() for el in article_elements]
-                    sentiments = [get_sentiment(headline) for headline in headlines[:2]]
-                    sentiment_data.extend(sentiments)
-                    scraped_data["Google News"].extend(headlines[:2])
+
+                headlines = []
+                if source_name == "Google News":
+                    headlines = []
+                    # Look for article elements that might contain the headline
+                    for article_tag in soup.find_all('article'): # Start with a general article tag
+                        # Then look for the specific headline link within that article
+                        headline_link = article_tag.find('a', class_='Jj6Lae') # Check the class name
+                        if headline_link and headline_link.text:
+                            headlines.append(headline_link.text.strip())
+                    # Or if the headline is a specific h tag
+                    for h3_tag in soup.find_all('h3', class_='another-new-class-for-h3'):
+                        a_tag = h3_tag.find('a')
+                        if a_tag and a_tag.text:
+                            headlines.append(a_tag.text.strip())
+                    all_scraped_data[source_name].extend(list(set(headlines))[:5]) # Store unique headlines, max 5
+
+
+                elif source_name == "Yahoo Finance News":
+                    headlines = []
+                    # Yahoo often uses 'li' for news items, or a div with a specific class
+                    for div_tag in soup.find_all('div', class_='Ov(h)'): # Example outer div for a news item
+                        a_tag = div_tag.find('a', class_='Fw(b)') # The actual headline link within
+                        if a_tag and a_tag.text:
+                            headlines.append(a_tag.text.strip())
+                    # Another common pattern might be:
+                    for p_tag in soup.find_all('p', class_='some-news-paragraph-class'):
+                        a_tag = p_tag.find('a')
+                        if a_tag and a_tag.text:
+                            headlines.append(a_tag.text.strip())
+                    all_scraped_data[source_name].extend(list(set(headlines))[:5]) # Store unique headlines, max 5
+
+                # Limit headlines per source to avoid overwhelming display/processing
+                all_scraped_data[source_name].extend(list(set(headlines))[:5]) # Store unique headlines, max 5
+
             except requests.exceptions.RequestException as e:
-                st.error(f"Error fetching data from {source} for {ticker}: {e}")
-                sentiment_data.extend(["Netral"] * 2)
-                scraped_data[source] = ["N/A"] * 2
+                st.warning(f"Failed to fetch data from {source_name} for {ticker}: {e}. Skipping this source.")
+                all_scraped_data[source_name] = ["Error: Could not retrieve news."]
             except Exception as e:
-                st.error(f"Error processing data from {source} for {ticker}: {e}")
-                sentiment_data.extend(["Netral"] * 2)
-                scraped_data[source] = ["N/A"] * 2
-        return sentiment_data[:7], scraped_data  # return also scraped data
+                st.warning(f"Error parsing data from {source_name} for {ticker}: {e}. Skipping this source.")
+                all_scraped_data[source_name] = ["Error: Could not parse news content."]
+
+        return all_scraped_data
 
     def get_sentiment(text):
-        # Placeholder sentiment analysis function. Replace with a real model.
-        #  Here's how you might use TextBlob (install with pip install textblob):
         try:
             from textblob import TextBlob
-
             analysis = TextBlob(text)
             if analysis.sentiment.polarity > 0.1:
                 return "Positif"
@@ -394,49 +365,67 @@ elif page == "Data Analysis Projects":
             else:
                 return "Netral"
         except ImportError:
+            st.warning("TextBlob not installed. Sentiment analysis will be 'Netral'. Run `pip install textblob`.")
             return "Netral"
-        #  OR
-        # You could use Vader (install with pip install vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
-        # analyzer = SentimentIntensityAnalyzer()
-        # vs = analyzer.polarity_scores(text)
-        # if vs['compound'] >= 0.05:
-        #     return "Positif"
-        # elif vs['compound'] <= -0.05:
-        #     return "Negatif"
-        # else:
-        #     return "Netral"
-        return "Netral"  # default
+        except Exception as e:
+            # Handle potential errors during TextBlob analysis (e.g., non-string input)
+            return "Netral" # Default to Neutral if analysis fails
 
     # Scrape and display sentiment
-    st.subheader("🧾 Sentimen 7 Hari Terakhir")
-    sentiment_data, scraped_data = scrape_sentiment(
-        selected_ticker
-    )  # Get the scraped data
-    sentiment_df = pd.DataFrame(
-        {
-            "Tanggal": pd.date_range(end=date.today(), periods=len(sentiment_data), freq="B"),
-            "Sentimen": sentiment_data,
-            "Sumber": ["Twitter", "Twitter", "Google News", "Google News"][
-                : len(sentiment_data)
-            ],
-        }
-    )
-    st.dataframe(sentiment_df, use_container_width=True)
+    st.subheader("🧾 Sentimen Terbaru dari Berita")
+    scraped_data_raw = scrape_sentiment(selected_ticker) # Get only the raw scraped data
 
-    # Show the scraped tweets/news
-    st.subheader("Scraped Data")  # Change here
-    if scraped_data["Twitter"]:
-        st.write("**Tweets:**")
-        for tweet in scraped_data["Twitter"]:
-            st.write(f"- {tweet}")
+    sentiment_list = []
+    # Using a counter to assign approximate dates for display
+    date_counter = 0
+    for source_name, headlines in scraped_data_raw.items():
+        if headlines: # Only process if there are actual headlines
+            for headline in headlines:
+                if headline and headline != "Error: Could not retrieve news." and headline != "Error: Could not parse news content.": # Only process valid headlines
+                    sentiment_list.append({
+                        "Tanggal": date.today() - timedelta(days=date_counter),
+                        "Sumber": source_name,
+                        "Sentimen": get_sentiment(headline),
+                        "Berita/Judul": headline
+                    })
+                    date_counter += 1
+        else:
+            # Add a placeholder if no news was found for a source
+            sentiment_list.append({
+                "Tanggal": date.today() - timedelta(days=date_counter),
+                "Sumber": source_name,
+                "Sentimen": "Netral", # Default sentiment if no news
+                "Berita/Judul": "Tidak ada berita ditemukan."
+            })
+            date_counter += 1
+
+
+    if sentiment_list: # Check if sentiment_list is not empty before creating DataFrame
+        sentiment_df = pd.DataFrame(sentiment_list)
+        # Sort by date for better display
+        sentiment_df = sentiment_df.sort_values(by="Tanggal", ascending=False).reset_index(drop=True)
+        st.dataframe(sentiment_df, use_container_width=True)
     else:
-        st.write("**Tweets:** N/A")  # added
-    if scraped_data["Google News"]:
-        st.write("**News Headlines:**")
-        for headline in scraped_data["Google News"]:
-            st.write(f"- {headline}")
-    else:
-        st.write("**News Headlines:** N/A")  # added
+        st.info("Tidak dapat mengambil berita sentimen saat ini.") # No sentiment data could be retrieved
+
+
+    # Show the scraped news headlines directly (refined display)
+    st.subheader("Detail Berita yang Ditemukan")
+    found_any_news = False
+    for source_name, headlines in scraped_data_raw.items():
+        if headlines and any(h not in ["Error: Could not retrieve news.", "Error: Could not parse news content."] for h in headlines):
+            st.write(f"**{source_name}:**")
+            for headline in headlines:
+                if headline not in ["Error: Could not retrieve news.", "Error: Could not parse news content."]:
+                    st.write(f"- {headline}")
+            found_any_news = True
+        else:
+            st.write(f"**{source_name}:** Tidak ada berita ditemukan atau terjadi kesalahan saat mengambil.")
+
+    if not found_any_news:
+        st.info("Tidak ada berita yang berhasil diambil dari sumber manapun.")
+
+
 
     # Recommendation
     st.subheader("✅ Rekomendasi")
@@ -476,10 +465,10 @@ elif page == "About Me":
         "I am passionate about transforming complex data into meaningful insights and user-friendly designs. I believe in the power of data to drive decision-making and enhance user experiences."
     )
     st.write(
-        "In my free time, I enjoy exploring new data visualization techniques, learning about UI/UX design principles, and working on personal projects that challenge my skills."
+        "In my free time, I enjoy reading, learning about design principles of art as in 3d and UI/UX, and working on personal projects that challenge my skills."
     )
     st.write(
-        "Feel free to connect with me on [LinkedIn](https://www.linkedin.com/in/mushthafa/) or check out my [GitHub](your_github_url) for more of my work."
+        "Feel free to connect with me on [LinkedIn](https://www.linkedin.com/in/mushthafa/)."
     )
     st.markdown("---")
     st.subheader("My Skills")
@@ -499,19 +488,28 @@ elif page == "About Me":
     st.markdown("---")
     st.subheader("My Education")
     st.write(
-        "I am currently pursuing a degree in Data Science at [Your University Name]. I have completed coursework in data analysis, machine learning, and UI/UX design."
+        "I am currently pursuing a degree in Data Science at Telkom University Bandung. I have completed coursework in data analysis, machine learning, and UI/UX design."
     )
     st.write(
         "I have also participated in various workshops and online courses to enhance my skills in data visualization and design."
     )
     st.markdown("---")
-    st.subheader("My Hobbies")
+    st.subheader("Certifications and competencies")
     st.write(
-        "In my free time, I enjoy exploring new data visualization techniques, learning about UI/UX design principles, and working on personal projects that challenge my skills."
+        "currently i have some certification that stand for some of my skills."
     )
     st.write(
-        "- Reading books on data science and design\n"
-        "- Participating in hackathons and coding challenges\n"
+        "- English Proficiency Test : [EPRT](https://igracias.telkomuniversity.ac.id/LACValidation/index.php?id=2240801&id2=84&id3=2243155&id4=1305220006)  \n"
+        "- English Communication Competency Test: [ECCT](https://igracias.telkomuniversity.ac.id/LACValidation/index.php?id=1097127&id2=107&id3=1099212&id4=1305220006)  \n"
+        )
+    st.markdown("---")
+    st.subheader("My Hobbies")
+    st.write(
+        "In my free time, I enjoy reading, learning about design principles especially in 3d and UI/UX, and working on personal projects that challenge my skills."
+    )
+    st.write(
+        "- Reading books\n"
+        "- Making and designing some artwork as in 3d or else\n"
         "- Exploring new technologies and tools\n"
         "- Traveling and experiencing different cultures\n"
     )
@@ -534,7 +532,6 @@ elif page == "About Me":
         "- Data Visualization: Creating interactive and informative visualizations to communicate insights effectively.\n"
         "- UI/UX Design: Designing user-friendly interfaces that enhance user experience and engagement.\n"
         "- Machine Learning: Applying machine learning techniques to solve real-world problems.\n"
-        "- Data Storytelling: Using data to tell compelling stories that resonate with audiences.\n"
     )
     st.markdown("---")
     st.subheader("My Future Goals")
@@ -555,9 +552,7 @@ elif page == "Contact":
     st.write(
         "- Email: [mushthafa.a.r@gmail.com](mailto:no)  \n"
         "- LinkedIn: [Mushthafa Aminur Rahman](https://www.linkedin.com/in/mushthafa/)  \n"
-        "- GitHub: [your_github_url](your_github_url)  \n"
-        "- Twitter: [@your_twitter_handle](https://twitter.com/your_twitter_handle)  \n"
-        "- Instagram: [@your_instagram_handle](https://instagram.com/your_instagram_handle)  \n"
-        "- Facebook: [Mushthafa Aminur Rahman](https://www.facebook.com/your_facebook_profile)  \n"
+        "- GitHub: [umam1n](https://github.com/umam1n)  \n"
+        "- Instagram: [@faaffa_](https://www.instagram.com/faaffa_/)  \n"
         "- Portfolio: [your_portfolio_url](your_portfolio_url)  \n"
     )
