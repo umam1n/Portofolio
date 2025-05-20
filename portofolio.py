@@ -554,5 +554,5 @@ elif page == "Contact":
         "- LinkedIn: [Mushthafa Aminur Rahman](https://www.linkedin.com/in/mushthafa/)  \n"
         "- GitHub: [umam1n](https://github.com/umam1n)  \n"
         "- Instagram: [@faaffa_](https://www.instagram.com/faaffa_/)  \n"
-        "- Portfolio: [your_portfolio_url](your_portfolio_url)  \n"
+        "- Portfolio: [Streamlit Portofolio](https://portofolio-umamln.streamlit.app/)  \n"
     )
