@@ -1,0 +1,11 @@
+streamlit
+yfinance
+pandas
+numpy
+scikit-learn
+tensorflow
+plotly
+beautifulsoup4
+requests
+textblob
+Pillow # For PIL.Image
