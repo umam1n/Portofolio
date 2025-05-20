@@ -548,7 +548,6 @@ elif page == "Contact":
     st.write(
         "Feel free to reach out to me for collaboration, inquiries, or just to connect!"
     )
-    st.write("Email:mushthafa.a.r@gmail.com")
     st.write(
         "- Email: [mushthafa.a.r@gmail.com](mailto:no)  \n"
         "- LinkedIn: [Mushthafa Aminur Rahman](https://www.linkedin.com/in/mushthafa/)  \n"
