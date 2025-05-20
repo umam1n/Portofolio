@@ -43,7 +43,7 @@ if page == "Homepage":
     with col1:
         try:
             profile_image = Image.open(
-                r"C:\Users\umaml\Downloads\c83083495df9fec9d3e55b61d071ee53.gif"
+                r"Foto .png"
             )  # Replace with your image path
             st.image(profile_image, width=200)
         except FileNotFoundError:
@@ -70,7 +70,7 @@ if page == "Homepage":
     with col3:
         try:
             project1_image = Image.open(
-                r"C:\Users\umaml\Downloads\29.7 cm x 42 cm.png"
+                r"29.7 cm x 42 cm.png"
             )  # Replace with your image path
             st.image(project1_image, caption="Infographic of Poverty Rate in Indonesia")
         except FileNotFoundError:
@@ -80,7 +80,7 @@ if page == "Homepage":
     with col4:
         try:
             project2_image = Image.open(
-                r"C:\Users\umaml\Downloads\Home.png"
+                r"Home.png"
             )  # Replace with your image path
             st.image(project2_image, caption="Visualization of Stock Price Prediction")
         except FileNotFoundError:
@@ -92,7 +92,7 @@ if page == "Homepage":
     with col5:
         try:
             project3_image = Image.open(
-                r"C:\Users\umaml\Downloads\newplot.png"
+                r"newplot.png"
             )  # Replace with your image path
             st.image(project3_image, caption="Another Stock Prediction Visualization")
         except FileNotFoundError:
@@ -114,7 +114,7 @@ elif page == "Data Visualization Projects":
     )
     try:
         project1_image = Image.open(
-            r"C:\Users\umaml\Downloads\29.7 cm x 42 cm.png"
+            r"29.7 cm x 42 cm.png"
         )  # Replace with your image path
         st.image(project1_image, caption="Infographic of Poverty Rate in Indonesia")
     except FileNotFoundError:
