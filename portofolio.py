@@ -42,11 +42,11 @@ if page == "Homepage":
     col1, col2 = st.columns([1, 2])  # Adjust ratio as needed
     with col1:
         try:
-            profile_image = Image.open(
+            #profile_image = Image.open(
                 #r"Foto .png"
             )  # Replace with your image path
             #st.image(profile_image, width=200)
-            st.image(st.image(
+            st.image(
             "https://i.ppy.sh/ded8aaca4957a758f738ff55d8f7d0af53bd55db/68747470733a2f2f6d656469612e74656e6f722e636f6d2f4a3441716e4351304e575541414141432f6f6b6179752d6e656b6f6d6174612d6f6b6179752e676966",
             width=200
         )
