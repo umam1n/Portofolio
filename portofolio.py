@@ -82,7 +82,7 @@ if page == "Homepage":
             project2_image = Image.open(
                 r"Home.png"
             )  # Replace with your image path
-            st.image(project2_image, caption="Visualization of Stock Price Prediction")
+            st.image(project2_image, caption="Visualization Nuclear usage and impact")
         except FileNotFoundError:
             st.error("Project 2 image not found. Please update the path.")
         st.markdown("[View Project 2](#project-2)")  # Create an anchor link later
@@ -94,7 +94,7 @@ if page == "Homepage":
             project3_image = Image.open(
                 r"newplot.png"
             )  # Replace with your image path
-            st.image(project3_image, caption="Another Stock Prediction Visualization")
+            st.image(project3_image, caption="Visualization of Stock Price Prediction")
         except FileNotFoundError:
             st.error("Project 3 image not found. Please update the path.")
         st.markdown("[View Project 3](#project-3)")
