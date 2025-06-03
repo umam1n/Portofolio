@@ -1,9 +1,9 @@
 streamlit
 yfinance
 pandas==1.5.3
-numpy==1.17.5 # IMPORTANT: Downgraded to be compatible with scikit-learn 0.21.3
-scikit-learn==0.21.3 # Pinned to your original version
-tensorflow-cpu==2.10.0 # This might cause issues with older numpy/scikit-learn, see note 2
+numpy==1.17.5          # <--- CRITICAL CHANGE: Downgrade NumPy to this version
+scikit-learn==0.21.3   # <--- Keep this pinned to your training version
+tensorflow-cpu==2.10.0
 plotly
 beautifulsoup4
 requests
