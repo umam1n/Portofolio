@@ -15,34 +15,12 @@ from bs4 import BeautifulSoup
 import requests
 from textblob import TextBlob  # Ensure this is installed
 
-# --- NEW IMPORTS for Big Five Personality Prediction ---
-import joblib
-
 # --- Basic Page Configuration ---
 st.set_page_config(
     page_title="Mushthafa Aminur Rahman - Data Portfolio",
     page_icon=":bar_chart:",  # You can choose a different emoji
     layout="wide",
 )
-
-# --- Load the trained model, scaler, and MAE for Big Five (Loaded once at app start) ---
-@st.cache_resource
-def load_trained_assets():
-    try:
-        pipeline = joblib.load('bfi_pipeline.pkl')
-        scaler = joblib.load('bfi_scaler.pkl')
-        bfi_columns = joblib.load('bfi_columns.pkl')
-        mae_score = joblib.load('model_mae.pkl')
-        return pipeline, scaler, bfi_columns, mae_score
-    except FileNotFoundError:
-        st.error("Error: Model files (bfi_pipeline.pkl, bfi_scaler.pkl, bfi_columns.pkl, model_mae.pkl) not found.")
-        st.error("Please ensure these files are in the same directory as your Streamlit app.")
-        st.stop()
-
-# Load assets only once
-pipeline, scaler, bfi_columns, mae_score = load_trained_assets()
-
-
 # --- Sidebar for Navigation ---
 st.sidebar.header("Navigation")
 page = st.sidebar.radio(
@@ -51,28 +29,29 @@ page = st.sidebar.radio(
         "Homepage",
         "Data Visualization Projects",
         "Data Analysis Projects",
-        "UI/UX Design Projects",
+        "UI/UX Design Projects",  # Corrected page name
         "About Me",
         "Contact",
     ],
 )
+
 
 # --- Main Content Area ---
 if page == "Homepage":
     # --- Hero Section ---
     col1, col2 = st.columns([1, 2])  # Adjust ratio as needed
     with col1:
-        # Directly pass the URL to st.image() - Removed try-except for URL
-        st.image(
-            "https://i.ppy.sh/ded8aaca4957a758f738ff55d8f7d0af53bd55db/68747470733a2f2f6d656469612e74656e6f722e636f6d2f4a3441716e4351304e575541414141432f6f6b6179752d6e656b6f6d6174612d6f6b6179752e676966",
-            width=200
-        )
-        # If you prefer a local image:
-        # try:
-        #     profile_image = Image.open(r"Foto .png")  # Replace with your local image path
-        #     st.image(profile_image, width=200)
-        # except FileNotFoundError:
-        #     st.error("Profile image not found. Please update the path.")
+        #st.image(
+        #   "https://i.ppy.sh/ded8aaca4957a758f738ff55d8f7d0af53bd55db/68747470733a2f2f6d656469612e74656e6f722e636f6d2f4a3441716e4351304e575541414141432f6f6b6179752d6e656b6f6d6174612d6f6b6179752e676966",
+        #    width=200
+        #)
+        try:
+            profile_image = Image.open(
+                r"Foto .png"
+            )  # Replace with your image path
+            st.image(profile_image, width=200)
+        except FileNotFoundError:
+            st.error("Profile image not found. Please update the path.")
 
     with col2:
         st.title("Mushthafa Aminur Rahman")
@@ -86,9 +65,13 @@ if page == "Homepage":
 
     st.markdown("---")
 
+
     # --- Featured Projects (Optional) ---
     st.subheader("Featured Projects")
+    # You can display thumbnails or brief descriptions of a few key projects here
+    # Example:
     col3, col4 = st.columns(2)
+    col5 = st.columns(2)
     with col3:
         try:
             project1_image = Image.open(
@@ -98,6 +81,7 @@ if page == "Homepage":
         except FileNotFoundError:
             st.error("Project 1 image not found. Please update the path.")
         st.markdown("[View Project 1](#project-1)")  # Create an anchor link later
+
 
     with col4:
         try:
@@ -121,7 +105,9 @@ if page == "Homepage":
             st.error("Project 3 image not found. Please update the path.")
         st.markdown("[View Project 3](#project-3)")
 
+
     st.markdown("---")
+
 
 elif page == "Data Visualization Projects":
     st.header("Data Visualization Projects")
@@ -140,30 +126,40 @@ elif page == "Data Visualization Projects":
     except FileNotFoundError:
         st.error("Image for Infographic of Poverty Rate not found. Please update the path.")
 
+
     # Add more data visualization projects here following the same pattern
     st.markdown("---")
-    st.subheader("Power BI Dashboard BI Team 4 Report")
+    st.subheader("Power BI Dashboard  BI Team 4 Report")
     st.write("An interactive Power BI dashboard displaying key business insights and performance metrics.")
     # Power BI Embed Code
     powerbi_embed_code = """
-    <iframe title="BI Team 4" width="600" height="373.5" src="https://app.powerbi.com/view?r=eyJrIjoiZTgyZjA1OTAtYTE2My00MDNjLTg2ZGUtNzgwODdmZjAxYTg1IiwidCI6IjkwYWZmZTBmLWMyYTMtNDEwOC1iYjk4LTZjZWI0ZTk0ZWYxNSIsImMiOjEwfQ%3D%3D&pageName=08a16d8354001fa1d27a" frameborder="0" allowFullScreen="true"></iframe>"""
+    <iframe title="BI Team 4" width="600" height="373.5" src="https://app.powerbi.com/view?r=eyJrIjoiZTgyZjA1OTAtYTE2My00MDNjLTg2ZGUtNzgwODdmZjAxYTg1IiwidCI6IjkwYWZmZTBmLWMyYTMtNDEwOC1iYjk4LTZjZWI0ZTk0ZWYxNSIsImMiOjEwfQ%3D%3D&pageName=08a16d8354001fa1d27a" frameborder="0" allowFullScreen="true"></iframe>    """
     components.html(powerbi_embed_code, height=400) # Adjust height as needed for better viewing
+
 
     st.write("This dashboard was developed to provide a comprehensive overview of [mention specific area, e.g., sales performance, operational efficiency] for BI Team 4, allowing for drill-down analysis and interactive filtering.")
 
 
+    # try:
+    #    project2_image = Image.open(r"path/to/your/dataviz_project2_image.png")
+    #    st.image(project2_image, caption="Your DataViz Project 2 Title")
+    # except FileNotFoundError:
+    #    st.error("Image for DataViz Project 2 not found. Please update the path.")
+    # st.markdown("[View Interactive Dashboard](your_dashboard_url)")
+
+
 elif page == "Data Analysis Projects":
     st.header("Data Analysis Projects")
-
-    # --- Project 1: Stock Price Prediction Dashboard ---
     st.subheader("Stock Price Prediction Dashboard")
     st.write(
         "This project demonstrates the use of LSTM neural networks to predict the stock prices of BBRI, TLKM, and ANTM. Users can select a stock and the number of days to predict, and the dashboard displays the historical data, the predicted prices, and a sentiment analysis based on recent news and social media."
     )
 
+
     # Stock Prediction Dashboard Implementation
     stock_choice = st.selectbox("📌 Pilih Saham:", ["BBRI", "TLKM", "ANTM"])
     predict_days = st.selectbox("🧮 Jumlah hari yang ingin diprediksi:", [7, 14, 30])
+
 
     # Ticker mapping
     ticker_map = {
@@ -174,6 +170,7 @@ elif page == "Data Analysis Projects":
     tickers = ["BBRI.JK", "TLKM.JK", "ANTM.JK"]
     selected_ticker = ticker_map[stock_choice]
     selected_index = tickers.index(selected_ticker)
+
 
     # Download data
     @st.cache_data
@@ -196,10 +193,13 @@ elif page == "Data Analysis Projects":
                 return None  # Important: Return None on error to prevent further issues
         return df.dropna(how="all")  # Drop rows where all values are NaN
 
+
     df_close = get_data()
+
 
     if df_close is None:
         st.stop()  # Stop if data download failed
+
 
     # Preprocessing
     scaler = MinMaxScaler()
@@ -209,6 +209,7 @@ elif page == "Data Analysis Projects":
         st.error(f"ValueError during scaling: {e}")
         st.stop()
 
+
     # Sequence preparation
     def create_sequences(data, time_steps=50):
         X, y = [], []
@@ -217,14 +218,17 @@ elif page == "Data Analysis Projects":
             y.append(data[i + time_steps])
         return np.array(X), np.array(y)
 
+
     time_steps = 50
     X, y = create_sequences(scaled_data, time_steps)
     X = X.reshape((X.shape[0], X.shape[1], len(tickers)))
+
 
     # Train-test split
     split_idx = int(len(X) * 0.8)
     X_train, X_test = X[:split_idx], X[split_idx:]
     y_train, y_test = y[:split_idx], y[split_idx:]
+
 
     # Build model
     model = Sequential(
@@ -243,6 +247,7 @@ elif page == "Data Analysis Projects":
     with st.spinner("🚀 Melatih model..."):
         model.fit(X_train, y_train, epochs=20, batch_size=32, verbose=0)
 
+
     # Predict future
     future_input = scaled_data[-time_steps:].reshape(
         (1, time_steps, len(tickers))
@@ -255,11 +260,13 @@ elif page == "Data Analysis Projects":
             [future_input[:, 1:, :], pred.reshape((1, 1, len(tickers)))], axis=1
         )
 
+
     future_predictions = scaler.inverse_transform(np.array(future_predictions))
     future_df = pd.DataFrame(future_predictions, columns=tickers)
     future_dates = pd.date_range(
         start=df_close.index[-1] + pd.Timedelta(days=1), periods=predict_days, freq="B"
     )
+
 
     # Combine actual + predicted
     combined_df = pd.concat(
@@ -271,8 +278,10 @@ elif page == "Data Analysis Projects":
         ]
     )
 
+
     # Plot using Plotly
     st.subheader(f"📊 Grafik Harga dan Prediksi ({stock_choice})")
+
 
     fig = go.Figure()
     fig.add_trace(
@@ -294,6 +303,7 @@ elif page == "Data Analysis Projects":
         )
     )
 
+
     fig.update_layout(
         xaxis_title="Date",
         yaxis_title="Price",
@@ -301,7 +311,9 @@ elif page == "Data Analysis Projects":
         hovermode="x unified",
     )
 
+
     st.plotly_chart(fig, use_container_width=True)
+
 
     # Prediction change %
     start_price = combined_df[selected_ticker].iloc[-predict_days - 1]
@@ -321,47 +333,49 @@ elif page == "Data Analysis Projects":
         }
         all_scraped_data = {"Google News": [], "Yahoo Finance News": []}  # Store the raw text
 
+
         for source_name, url in sources.items():
             try:
                 response = requests.get(url, headers={"User-Agent": "Mozilla/5.0"})
                 response.raise_for_status() # Raise HTTPError for bad responses (4xx or 5xx)
                 soup = BeautifulSoup(response.content, "html.parser")
 
+
                 headlines = []
                 if source_name == "Google News":
-                    # Google News Selectors (NEED TO BE UPDATED based on current HTML)
-                    # You'll need to manually inspect Google News HTML to find correct selectors
-                    # Example of what you might look for (these are *likely* outdated now):
-                    for article_tag in soup.find_all('article'):
-                        # Common pattern: h3 with a link inside
-                        headline_elem = article_tag.find('h3')
-                        if headline_elem:
-                            headline_link = headline_elem.find('a')
-                            if headline_link and headline_link.text:
-                                headlines.append(headline_link.text.strip())
-                    # Fallback/additional selectors if articles don't catch all
-                    # For example, if headlines are just in specific div/span tags
-                    for div_tag in soup.find_all('div', class_='some-google-news-headline-class'):
-                        a_tag = div_tag.find('a')
-                        if a_tag and a_tag.text:
-                            headlines.append(a_tag.text.strip())
-
-                elif source_name == "Yahoo Finance News":
-                    # Yahoo Finance News Selectors (NEED TO BE UPDATED based on current HTML)
-                    # You'll need to manually inspect Yahoo Finance News HTML to find correct selectors
-                    # Common patterns: div containing a link, often with class 'Fw(b)' for bold text
-                    for div_tag in soup.find_all('div', class_='Ov(h)'): # This was a common outer div
-                        a_tag = div_tag.find('a', class_='Fw(b)')
-                        if a_tag and a_tag.text:
-                            headlines.append(a_tag.text.strip())
-                    # Another common pattern if headlines are within specific tags
-                    for h3_tag in soup.find_all('h3', class_='Mb(5px)'): # Another common Yahoo headline tag
+                    headlines = []
+                    # Look for article elements that might contain the headline
+                    for article_tag in soup.find_all('article'): # Start with a general article tag
+                        # Then look for the specific headline link within that article
+                        headline_link = article_tag.find('a', class_='Jj6Lae') # Check the class name
+                        if headline_link and headline_link.text:
+                            headlines.append(headline_link.text.strip())
+                    # Or if the headline is a specific h tag
+                    for h3_tag in soup.find_all('h3', class_='another-new-class-for-h3'):
                         a_tag = h3_tag.find('a')
                         if a_tag and a_tag.text:
                             headlines.append(a_tag.text.strip())
+                    all_scraped_data[source_name].extend(list(set(headlines))[:5]) # Store unique headlines, max 5
 
-                # Store unique headlines, max 5 per source
-                all_scraped_data[source_name].extend(list(set(headlines))[:5])
+
+                elif source_name == "Yahoo Finance News":
+                    headlines = []
+                    # Yahoo often uses 'li' for news items, or a div with a specific class
+                    for div_tag in soup.find_all('div', class_='Ov(h)'): # Example outer div for a news item
+                        a_tag = div_tag.find('a', class_='Fw(b)') # The actual headline link within
+                        if a_tag and a_tag.text:
+                            headlines.append(a_tag.text.strip())
+                    # Another common pattern might be:
+                    for p_tag in soup.find_all('p', class_='some-news-paragraph-class'):
+                        a_tag = p_tag.find('a')
+                        if a_tag and a_tag.text:
+                            headlines.append(a_tag.text.strip())
+                    all_scraped_data[source_name].extend(list(set(headlines))[:5]) # Store unique headlines, max 5
+
+
+                # Limit headlines per source to avoid overwhelming display/processing
+                all_scraped_data[source_name].extend(list(set(headlines))[:5]) # Store unique headlines, max 5
+
 
             except requests.exceptions.RequestException as e:
                 st.warning(f"Failed to fetch data from {source_name} for {ticker}: {e}. Skipping this source.")
@@ -370,7 +384,9 @@ elif page == "Data Analysis Projects":
                 st.warning(f"Error parsing data from {source_name} for {ticker}: {e}. Skipping this source.")
                 all_scraped_data[source_name] = ["Error: Could not parse news content."]
 
+
         return all_scraped_data
+
 
     def get_sentiment(text):
         try:
@@ -389,9 +405,11 @@ elif page == "Data Analysis Projects":
             # Handle potential errors during TextBlob analysis (e.g., non-string input)
             return "Netral" # Default to Neutral if analysis fails
 
+
     # Scrape and display sentiment
     st.subheader("🧾 Sentimen Terbaru dari Berita")
     scraped_data_raw = scrape_sentiment(selected_ticker) # Get only the raw scraped data
+
 
     sentiment_list = []
     # Using a counter to assign approximate dates for display
@@ -440,6 +458,7 @@ elif page == "Data Analysis Projects":
         else:
             st.write(f"**{source_name}:** Tidak ada berita ditemukan atau terjadi kesalahan saat mengambil.")
 
+
     if not found_any_news:
         st.info("Tidak ada berita yang berhasil diambil dari sumber manapun.")
 
@@ -453,92 +472,20 @@ elif page == "Data Analysis Projects":
     else:
         st.warning("Rekomendasi: **HOLD** - Pergerakan stabil 🔄")
 
-    # --- Horizontal Rule to separate projects ---
-    st.markdown("---")
-
-    # --- NEW PROJECT: Big Five Personality Prediction Dashboard ---
-    st.subheader("Big Five Personality Prediction Dashboard")
-    st.markdown(
-        """
-        This project showcases a machine learning model that predicts Big Five personality traits
-        (Openness, Conscientiousness, Extroversion, Agreeableness, Neuroticism) based on text input.
-        It uses a pre-trained pipeline to analyze the sentiment and characteristics of the provided text.
-        """
-    )
-    st.write("---")
-
-    # Display MAE in the sidebar for visibility
-    st.sidebar.subheader("Model Performance")
-    st.sidebar.metric(label="Mean Absolute Error (MAE) on Test Set", value=f"{mae_score:.4f}")
-    st.sidebar.markdown(
-        """
-        <small>MAE indicates the average magnitude of the errors in a set of predictions, without considering their direction. A lower MAE is better.</small>
-        """, unsafe_allow_html=True
-    )
-
-    # --- Example Sentences ---
-    example_sentences = {
-        "Select an example...": "", # Default empty selection
-        "Positive & Social": "Having a wonderful time with friends, life is full of joy!",
-        "Reflective & Creative": "Lost in thought, I often find inspiration in the quiet moments of nature.",
-        "Organized & Diligent": "I meticulously plan my tasks to ensure everything is completed on time and efficiently.",
-        "Expressing Frustration": "This situation is incredibly frustrating and making me feel very anxious.",
-        "Indonesian Phrase Example": "astaga Indonesia bukan negara fatherless lagi karena PAPAH SUDAH DATANG"
-    }
-
-    selected_example = st.selectbox("Or choose an example sentence:", list(example_sentences.keys()))
-
-    # Set the text area content based on selection
-    user_input_default = example_sentences[selected_example] if selected_example else ""
-    user_input = st.text_area("Enter your sentence here:", value=user_input_default, height=100)
-
-
-    if st.button("Predict Personality"):
-        if user_input:
-            # Check for keywords and display image
-            if "job" in user_input.lower() and "application" in user_input.lower():
-                st.subheader("Recognized Keywords: 'job' and 'application'!")
-                st.image("https://eforms.com/images/2018/03/Employment-Job-Application.png", caption="Job Application Form Example", use_container_width=True)
-                st.markdown("---") # Add a separator after the image
-
-            # Predict personality scores
-            prediction_scaled = pipeline.predict([user_input])
-
-            st.subheader("Predicted Big Five Scores (0-1 Scale)")
-
-            results_df = pd.DataFrame(prediction_scaled, columns=bfi_columns)
-            results_df_rounded = results_df.round(4)
-
-            st.dataframe(results_df_rounded.style.highlight_max(axis=1))
-
-            st.write("---")
-            st.markdown(
-                """
-                **Understanding the Big Five Personality Traits (Scores 0-1):**
-                * **Openness:** Imaginative, insightful, and curious vs. practical, conventional, and conservative.
-                * **Conscientiousness:** Organized, thorough, and reliable vs. careless, impulsive, and disorganized.
-                * **Extroversion:** Outgoing, energetic, and assertive vs. solitary, reserved, and thoughtful.
-                * **Agreeableness:** Friendly, compassionate, and cooperative vs. challenging, detached, and suspicious.
-                * **Neuroticism:** Sensitive, nervous, and prone to worry vs. stable, calm, and secure.
-                """
-            )
-        else:
-            st.warning("Please enter some text to make a prediction.")
-
-    st.write("---")
-    st.caption("This model provides predictions based on a trained dataset and may not be perfectly accurate for all inputs.")
-
 
 elif page == "UI/UX Design Projects":  # Corrected page name
     st.header("UI/UX Design Portfolio")
     st.write("Here are some of my UI/UX design projects and case studies:")
 
+
     st.subheader("MEDICARE Mobile App Prototype")
     st.write("An interactive prototype for a healthcare mobile application.")
+
 
     figma_embed_code = """
     <iframe style="border: 1px solid rgba(0, 0, 0, 0.1);" width="800" height="450" src="https://embed.figma.com/proto/VgM0omLsJZo9DbRRrA6zWy/MEDICARE?node-id=1-3321&starting-point-node-id=1%3A3359&embed-host=share" allowfullscreen></iframe>"""
     components.html(figma_embed_code, height=500)  # Adjust height as needed
+
 
     # Add descriptions and potentially images related to the design process
     st.write(
@@ -546,10 +493,12 @@ elif page == "UI/UX Design Projects":  # Corrected page name
     )
     # st.image("path/to/your/medicare_design_image.png", caption="Medicare App Design")
 
+
     # ... other UI/UX projects ...
 
-elif page == "About Me":
-    st.header("Undergraduate Student in Data Science")
+
+elif page == "About Me": 
+    st.header("Undergraduate Student in data Science")
     st.write(
         "I am an undergraduate student specializing in data science, with a keen interest in data visualization and UI/UX design. My goal is to leverage data to create impactful solutions."
     )
@@ -588,12 +537,12 @@ elif page == "About Me":
     st.markdown("---")
     st.subheader("Certifications and competencies")
     st.write(
-        "Currently I have some certifications that stand for some of my skills."
+        "currently i have some certification that stand for some of my skills."
     )
     st.write(
         "- English Proficiency Test : [EPRT](https://igracias.telkomuniversity.ac.id/LACValidation/index.php?id=2240801&id2=84&id3=2243155&id4=1305220006)  \n"
         "- English Communication Competency Test: [ECCT](https://igracias.telkomuniversity.ac.id/LACValidation/index.php?id=1097127&id2=107&id3=1099212&id4=1305220006)  \n"
-    )
+        )
     st.markdown("---")
     st.subheader("My Hobbies")
     st.write(
@@ -611,11 +560,9 @@ elif page == "About Me":
         "I have worked on various projects in data visualization, data analysis, and UI/UX design. Here are some of my notable projects:"
     )
     st.write(
-        "- [Stock Price Prediction Dashboard](#stock-price-prediction-dashboard)  \n" # Updated anchor
-        "- [Big Five Personality Prediction Dashboard](#big-five-personality-prediction-dashboard)  \n" # New anchor
-        "- [Infographic of Poverty Rate in Indonesia](#infographic-of-poverty-rate-in-indonesia)  \n" # Updated anchor
-        "- [Power BI Dashboard BI Team 4 Report](#power-bi-dashboard-bi-team-4-report)  \n" # Updated anchor
-        "- [MEDICARE Mobile App Prototype](#medicare-mobile-app-prototype)  \n" # Updated anchor
+        "- [Stock Price Prediction Dashboard](#stock-prediction-project)  \n"
+        "- [Data Visualization Projects](#data-visualization-projects)  \n"
+        "- [UI/UX Design Projects](#ui-ux-design-projects)  \n"
     )
     st.markdown("---")
     st.subheader("My Interests")
@@ -636,14 +583,14 @@ elif page == "About Me":
         "I believe that data has the power to transform industries and improve lives, and I am excited to be a part of this journey."
     )
     st.markdown("---")
-
+        
 elif page == "Contact":
     st.header("Contact Me")
     st.write(
         "Feel free to reach out to me for collaboration, inquiries, or just to connect!"
     )
     st.write(
-        "- Email: [mushthafa.a.r@gmail.com](mailto:mushthafa.a.r@gmail.com)  \n" # Corrected email link
+        "- Email: [mushthafa.a.r@gmail.com](mailto:no)  \n"
         "- LinkedIn: [Mushthafa Aminur Rahman](https://www.linkedin.com/in/mushthafa/)  \n"
         "- GitHub: [umam1n](https://github.com/umam1n)  \n"
         "- Instagram: [@faaffa_](https://www.instagram.com/faaffa_/)  \n"
