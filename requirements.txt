@@ -1,11 +1,23 @@
 streamlit
+
 yfinance
-pandas==latest_stable_version # e.g., 2.2.0
-numpy==latest_stable_version # e.g., 1.26.4
-scikit-learn==latest_stable_version # e.g., 1.4.2
-tensorflow-cpu==2.10.0 # This should be compatible with recent numpy/pandas
+
+pandas==1.5.3 # Example: Use the version you have locally or a known stable one
+
+numpy==1.23.5 # Example
+
+scikit-learn
+
+tensorflow-cpu==2.10.0 # Or your desired version
+
 plotly
+
 beautifulsoup4
+
 requests
+
 textblob
+
 Pillow
+
+here's the requirement.txt 
