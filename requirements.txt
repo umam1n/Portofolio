@@ -1,11 +1,12 @@
 streamlit
 yfinance
-pandas==1.5.3 # Example: Use the version you have locally or a known stable one
-numpy==1.23.5 # Example
+pandas==1.5.3
+numpy==1.23.5
 scikit-learn
-tensorflow-cpu==2.10.0 # Or your desired version
+tensorflow-cpu==2.10.0
 plotly
 beautifulsoup4
 requests
 textblob
 Pillow
+xgboost # You also need xgboost for the MultiOutputRegressor with XGBRegressor
