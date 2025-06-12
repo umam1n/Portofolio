@@ -508,77 +508,79 @@ elif page == "Data Analysis Projects":
         else:
             st.warning("Rekomendasi: **HOLD** - Pergerakan stabil 🔄")
 
-    elif analysis_project_choice == "Big Five Personality Prediction":
-        # --- Big Five Personality Prediction Dashboard ---
-        st.subheader("Big Five Personality Prediction Dashboard")
-        st.markdown(
-            """
-            This project showcases a machine learning model that predicts Big Five personality traits
-            (Openness, Conscientiousness, Extroversion, Agreeableness, Neuroticism) based on text input.
-            """
-        )
-        st.write("---")
+    
+    # elif analysis_project_choice == "Big Five Personality Prediction":
+    #     # --- Big Five Personality Prediction Dashboard ---
+    #     st.subheader("Big Five Personality Prediction Dashboard")
+    #     st.markdown(
+    #         """
+    #         This project showcases a machine learning model that predicts Big Five personality traits
+    #         (Openness, Conscientiousness, Extroversion, Agreeableness, Neuroticism) based on text input.
+    #         """
+    #     )
+    #     st.write("---")
 
-        # Display MAE in the sidebar for visibility (for the Big Five model)
-        st.sidebar.subheader("Big Five Model Performance")
-        st.sidebar.metric(label="Mean Absolute Error (MAE) on Test Set", value=f"{bfi_mae_score:.4f}")
-        st.sidebar.markdown(
-            """
-            <small>MAE indicates the average magnitude of the errors in a set of predictions, without considering their direction. A lower MAE is better.</small>
-            """, unsafe_allow_html=True
-        )
+    #     # Display MAE in the sidebar for visibility (for the Big Five model)
+    #     st.sidebar.subheader("Big Five Model Performance")
+    #     st.sidebar.metric(label="Mean Absolute Error (MAE) on Test Set", value=f"{bfi_mae_score:.4f}")
+    #     st.sidebar.markdown(
+    #         """
+    #         <small>MAE indicates the average magnitude of the errors in a set of predictions, without considering their direction. A lower MAE is better.</small>
+    #         """, unsafe_allow_html=True
+    #     )
 
-        # --- Example Sentences ---
-        example_sentences = {
-            "Select an example...": "", # Default empty selection
-            "Positive & Social": "Having a wonderful time with friends, life is full of joy!",
-            "Reflective & Creative": "Lost in thought, I often find inspiration in the quiet moments of nature.",
-            "Organized & Diligent": "I meticulously plan my tasks to ensure everything is completed on time and efficiently.",
-            "Expressing Frustration": "This situation is incredibly frustrating and making me feel very anxious.",
-            "Indonesian Phrase Example": "astaga Indonesia bukan negara fatherless lagi karena PAPAH SUDAH DATANG"
-        }
+    #     # --- Example Sentences ---
+    #     example_sentences = {
+    #         "Select an example...": "", # Default empty selection
+    #         "Positive & Social": "Having a wonderful time with friends, life is full of joy!",
+    #         "Reflective & Creative": "Lost in thought, I often find inspiration in the quiet moments of nature.",
+    #         "Organized & Diligent": "I meticulously plan my tasks to ensure everything is completed on time and efficiently.",
+    #         "Expressing Frustration": "This situation is incredibly frustrating and making me feel very anxious.",
+    #         "Indonesian Phrase Example": "astaga Indonesia bukan negara fatherless lagi karena PAPAH SUDAH DATANG"
+    #     }
 
-        selected_example = st.selectbox("Or choose an example sentence:", list(example_sentences.keys()))
+    #     selected_example = st.selectbox("Or choose an example sentence:", list(example_sentences.keys()))
 
-        # Set the text area content based on selection
-        user_input_default = example_sentences[selected_example] if selected_example else ""
-        user_input = st.text_area("Enter your sentence here:", value=user_input_default, height=100)
+    #     # Set the text area content based on selection
+    #     user_input_default = example_sentences[selected_example] if selected_example else ""
+    #     user_input = st.text_area("Enter your sentence here:", value=user_input_default, height=100)
 
 
-        if st.button("Predict Personality"):
-            if user_input:
-                # Check for keywords and display image
-                if "job" in user_input.lower() and "application" in user_input.lower():
-                    st.subheader("Recognized Keywords: 'job' and 'application'!")
-                    st.image("https://eforms.com/images/2018/03/Employment-Job-Application.png", caption="Job Application Form Example", use_container_width=True)
-                    st.markdown("---") # Add a separator after the image
+    #     if st.button("Predict Personality"):
+    #         if user_input:
+    #             # Check for keywords and display image
+    #             if "job" in user_input.lower() and "application" in user_input.lower():
+    #                 st.subheader("Recognized Keywords: 'job' and 'application'!")
+    #                 st.image("https://eforms.com/images/2018/03/Employment-Job-Application.png", caption="Job Application Form Example", use_container_width=True)
+    #                 st.markdown("---") # Add a separator after the image
 
-                # Predict personality scores using the BFI pipeline
-                prediction_scaled = bfi_pipeline.predict([user_input])
+    #             # Predict personality scores using the BFI pipeline
+    #             prediction_scaled = bfi_pipeline.predict([user_input])
 
-                st.subheader("Predicted Big Five Scores (0-1 Scale)")
+    #             st.subheader("Predicted Big Five Scores (0-1 Scale)")
 
-                results_df = pd.DataFrame(prediction_scaled, columns=bfi_columns)
-                results_df_rounded = results_df.round(4)
+    #             results_df = pd.DataFrame(prediction_scaled, columns=bfi_columns)
+    #             results_df_rounded = results_df.round(4)
 
-                st.dataframe(results_df_rounded.style.highlight_max(axis=1))
+    #             st.dataframe(results_df_rounded.style.highlight_max(axis=1))
 
-                st.write("---")
-                st.markdown(
-                    """
-                    **Understanding the Big Five Personality Traits (Scores 0-1):**
-                    * **openness:** Imaginative, insightful, and curious vs. practical, conventional, and conservative.
-                    * **conscientiousness:** Organized, thorough, and reliable vs. careless, impulsive, and disorganized.
-                    * **extraversion:** Outgoing, energetic, and assertive vs. solitary, reserved, and thoughtful.
-                    * **agreeableness:** Friendly, compassionate, and cooperative vs. challenging, detached, and suspicious.
-                    * **neuroticism:** Sensitive, nervous, and prone to worry vs. stable, calm, and secure.
-                    """
-                )
-            else:
-                st.warning("Please enter some text to make a prediction.")
+    #             st.write("---")
+    #             st.markdown(
+    #                 """
+    #                 **Understanding the Big Five Personality Traits (Scores 0-1):**
+    #                 * **openness:** Imaginative, insightful, and curious vs. practical, conventional, and conservative.
+    #                 * **conscientiousness:** Organized, thorough, and reliable vs. careless, impulsive, and disorganized.
+    #                 * **extraversion:** Outgoing, energetic, and assertive vs. solitary, reserved, and thoughtful.
+    #                 * **agreeableness:** Friendly, compassionate, and cooperative vs. challenging, detached, and suspicious.
+    #                 * **neuroticism:** Sensitive, nervous, and prone to worry vs. stable, calm, and secure.
+    #                 """
+    #             )
+    #         else:
+    #             st.warning("Please enter some text to make a prediction.")
 
-        st.write("---")
-        st.caption("This model provides predictions based on a trained dataset and may not be perfectly accurate for all inputs.")
+    #     st.write("---")
+    #     st.caption("This model provides predictions based on a trained dataset and may not be perfectly accurate for all inputs.")
+
 
 
 elif page == "UI/UX Design Projects":  # Corrected page name
