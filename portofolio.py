@@ -30,77 +30,77 @@ st.set_page_config(
     layout="wide",
 )
 
-# --- Function to Train and Load Big Five Assets (Cached) ---
-@st.cache_resource(show_spinner="Training Big Five personality model and loading data...")
-def train_and_load_bfi_model():
-    # Load data - Ensure your paths are correct relative to your Streamlit app script
-    try:
-        # Corrected file paths based on your input
-        bfi_df = pd.read_csv("data_training_processed.csv")
-        tweets_df = pd.read_csv("FatherlessFullFiltered.csv")
-    except FileNotFoundError:
-        st.error("Error: 'data_training_processed.csv' or 'FatherlessFullFiltered.csv' not found.")
-        st.error("Please ensure these files are in the same directory as your Streamlit app.")
-        st.stop() # Stop the app if data files are missing
-# Ensure 'full_text' column exists and is not null
-    # Assuming 'full_text' is in 'FatherlessFullFiltered.csv'
-    if 'full_text' not in tweets_df.columns:
-        st.error("Error: 'full_text' column not found in 'FatherlessFullFiltered.csv'.")
-        st.stop()
+# # --- Function to Train and Load Big Five Assets (Cached) ---
+# @st.cache_resource(show_spinner="Training Big Five personality model and loading data...")
+# def train_and_load_bfi_model():
+#     # Load data - Ensure your paths are correct relative to your Streamlit app script
+#     try:
+#         # Corrected file paths based on your input
+#         bfi_df = pd.read_csv("data_training_processed.csv")
+#         tweets_df = pd.read_csv("FatherlessFullFiltered.csv")
+#     except FileNotFoundError:
+#         st.error("Error: 'data_training_processed.csv' or 'FatherlessFullFiltered.csv' not found.")
+#         st.error("Please ensure these files are in the same directory as your Streamlit app.")
+#         st.stop() # Stop the app if data files are missing
+# # Ensure 'full_text' column exists and is not null
+#     # Assuming 'full_text' is in 'FatherlessFullFiltered.csv'
+#     if 'full_text' not in tweets_df.columns:
+#         st.error("Error: 'full_text' column not found in 'FatherlessFullFiltered.csv'.")
+#         st.stop()
 
-    # Drop rows where 'full_text' is NaN before concatenation if necessary
-    # Or handle it after concatenation if the issue is with `bfi_df` for text columns
-    tweets_df = tweets_df.dropna(subset=['full_text'])
+#     # Drop rows where 'full_text' is NaN before concatenation if necessary
+#     # Or handle it after concatenation if the issue is with `bfi_df` for text columns
+#     tweets_df = tweets_df.dropna(subset=['full_text'])
 
-    # Ensure personality columns exist in bfi_df
-    personality_cols = ['openness', 'conscientiousness', 'extraversion', 'agreeableness', 'neuroticism']
-    for col in personality_cols:
-        if col not in bfi_df.columns:
-            st.error(f"Error: '{col}' column not found in 'data_training_processed.csv'.")
-            st.stop()
+#     # Ensure personality columns exist in bfi_df
+#     personality_cols = ['openness', 'conscientiousness', 'extraversion', 'agreeableness', 'neuroticism']
+#     for col in personality_cols:
+#         if col not in bfi_df.columns:
+#             st.error(f"Error: '{col}' column not found in 'data_training_processed.csv'.")
+#             st.stop()
 
-    # Concatenate the dataframes. Assuming they have the same number of rows
-    # or that the 'full_text' from tweets_df aligns with rows in bfi_df.
-    # If they are meant to be matched by an ID, you should merge them.
-    # For now, concatenating assumes row-wise alignment.
-    if len(tweets_df) != len(bfi_df):
-        st.warning("Warning: 'FatherlessFullFiltered.csv' and 'data_training_processed.csv' have different number of rows. They will be concatenated as is. Ensure this is the intended behavior.")
-        # If they are meant to be equal length, you might want to stop or raise an error.
-        # For now, we'll take the minimum length to avoid issues.
-        min_len = min(len(tweets_df), len(bfi_df))
-        df = pd.concat([tweets_df.head(min_len), bfi_df.head(min_len)], axis=1)
-    else:
-        df = pd.concat([tweets_df, bfi_df], axis=1)
+#     # Concatenate the dataframes. Assuming they have the same number of rows
+#     # or that the 'full_text' from tweets_df aligns with rows in bfi_df.
+#     # If they are meant to be matched by an ID, you should merge them.
+#     # For now, concatenating assumes row-wise alignment.
+#     if len(tweets_df) != len(bfi_df):
+#         st.warning("Warning: 'FatherlessFullFiltered.csv' and 'data_training_processed.csv' have different number of rows. They will be concatenated as is. Ensure this is the intended behavior.")
+#         # If they are meant to be equal length, you might want to stop or raise an error.
+#         # For now, we'll take the minimum length to avoid issues.
+#         min_len = min(len(tweets_df), len(bfi_df))
+#         df = pd.concat([tweets_df.head(min_len), bfi_df.head(min_len)], axis=1)
+#     else:
+#         df = pd.concat([tweets_df, bfi_df], axis=1)
 
 
-    # Drop rows where any of the target personality columns are NaN
-    df = df.dropna(subset=personality_cols)
-    df = df.dropna(subset=['full_text']) # Ensure text is also not NaN
+#     # Drop rows where any of the target personality columns are NaN
+#     df = df.dropna(subset=personality_cols)
+#     df = df.dropna(subset=['full_text']) # Ensure text is also not NaN
 
-    X = df['full_text']
-    y = df[personality_cols] # Use the correct lowercase column names
-    # Using a separate scaler for the Big Five model's targets
-    bfi_scaler = MinMaxScaler()
-    y_scaled = bfi_scaler.fit_transform(y)
+#     X = df['full_text']
+#     y = df[personality_cols] # Use the correct lowercase column names
+#     # Using a separate scaler for the Big Five model's targets
+#     bfi_scaler = MinMaxScaler()
+#     y_scaled = bfi_scaler.fit_transform(y)
 
-    X_train, X_test, y_train, y_test = train_test_split(X, y_scaled, test_size=0.2, random_state=42)
+#     X_train, X_test, y_train, y_test = train_test_split(X, y_scaled, test_size=0.2, random_state=42)
 
-    bfi_pipeline = make_pipeline(
-        TfidfVectorizer(max_features=3000),
-        MultiOutputRegressor(XGBRegressor(n_estimators=100, learning_rate=0.1, random_state=42))
-    )
+#     bfi_pipeline = make_pipeline(
+#         TfidfVectorizer(max_features=3000),
+#         MultiOutputRegressor(XGBRegressor(n_estimators=100, learning_rate=0.1, random_state=42))
+#     )
 
-    bfi_pipeline.fit(X_train, y_train)
+#     bfi_pipeline.fit(X_train, y_train)
 
-    # --- Calculate MAE for the Big Five model ---
-    y_pred_test = bfi_pipeline.predict(X_test)
-    bfi_mae_score = mean_absolute_error(y_test, y_pred_test)
+#     # --- Calculate MAE for the Big Five model ---
+#     y_pred_test = bfi_pipeline.predict(X_test)
+#     bfi_mae_score = mean_absolute_error(y_test, y_pred_test)
 
-    # Return all necessary components for the Big Five model
-    return bfi_pipeline, bfi_scaler, y.columns.tolist(), bfi_mae_score
+#     # Return all necessary components for the Big Five model
+#     return bfi_pipeline, bfi_scaler, y.columns.tolist(), bfi_mae_score
 
-# Load Big Five assets only once at app startup
-bfi_pipeline, bfi_scaler, bfi_columns, bfi_mae_score = train_and_load_bfi_model()
+# # Load Big Five assets only once at app startup
+# bfi_pipeline, bfi_scaler, bfi_columns, bfi_mae_score = train_and_load_bfi_model()
 
 
 # --- Sidebar for Navigation ---
